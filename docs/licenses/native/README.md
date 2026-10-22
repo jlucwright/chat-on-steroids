@@ -17,7 +17,9 @@ Upstream build/source projects:
 - Windows libvips builds: https://github.com/libvips/build-win64-mxe
 - libvips source: https://github.com/libvips/libvips
 
-The current dependency set uses sharp 0.35.4 / libvips 8.18.6. The release pipeline
+The last fully inventoried release uses sharp 0.35.4 / libvips 8.18.6.
+The security candidate uses sharp 0.35.5 / libvips 8.18.7 and requires a refreshed
+corresponding-source inventory before packaging. The release pipeline
 places `Chat-On-Steroids-Native-Sources.tar.gz` beside the matching installers at:
 https://github.com/totec448-spec/chat-on-steroids/releases
 Use the source archive and checksums from the same release as your installer.
@@ -38,6 +40,6 @@ rebuilding and replacement. On macOS a modified application copy needs a new loc
 ad-hoc seal; no publisher key is required by this release.
 
 Electron/Chromium notices ship separately as `LICENSE.electron.txt` and
-`LICENSES.chromium.html` in application resources. Electron 44.3.0's source, dependency
-revisions and build scripts are at https://github.com/electron/electron/tree/v44.3.0
+`LICENSES.chromium.html` in application resources. Electron 44.9.3's source, dependency
+revisions and build scripts are at https://github.com/electron/electron/tree/v44.9.3
 (including its DEPS file). Tunnel and ripgrep retain their own notices.

@@ -1,3 +1,4 @@
+import './certificate-trust-bootstrap.js';
 import { stopInputStartup } from './session/start-input.js';
 import { browserExtensionRequired } from '../shared/types.js';
 import { requestSessionFinishGoal, setFinishNotifier } from './session/finish.js';

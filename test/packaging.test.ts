@@ -113,14 +113,23 @@ describe('cross-platform packaging targets', () => {
     ]) expect(pkg.scripts[script]).toBeTypeOf('string');
   });
 
-  it('pins Electron 44.3.0 exactly and proves packaged runners use those runtime bytes', () => {
+  it('pins Electron 44.9.3 exactly and proves packaged runners use those runtime bytes', () => {
     const pkg = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
     const lock = JSON.parse(readFileSync(path.join(root, 'package-lock.json'), 'utf8'));
     const smoke = readFileSync(path.join(root, 'scripts', 'smoke-packaged-runtime.mjs'), 'utf8');
 
-    expect(pkg.devDependencies.electron).toBe('44.3.0');
-    expect(lock.packages?.['']?.devDependencies?.electron).toBe('44.3.0');
-    expect(lock.packages?.['node_modules/electron']?.version).toBe('44.3.0');
+    expect(pkg.engines.node).toBe('>=24.22.1');
+    for (const file of ['.github/workflows/ci.yml', '.github/workflows/release.yml']) {
+      const workflow = yamlFile(file);
+      for (const job of Object.values(workflow.jobs) as any[]) {
+        for (const step of job.steps ?? []) {
+          if (step.uses?.startsWith('actions/setup-node@')) expect(step.with['node-version']).toBe('24.22.1');
+        }
+      }
+    }
+    expect(pkg.devDependencies.electron).toBe('44.9.3');
+    expect(lock.packages?.['']?.devDependencies?.electron).toBe('44.9.3');
+    expect(lock.packages?.['node_modules/electron']?.version).toBe('44.9.3');
     expect(smoke).toContain('const expectedElectronVersion = sourcePackage.devDependencies?.electron;');
     expect(smoke).toContain('electron: process.versions.electron');
     expect(smoke).toContain('runtime.electron !== expectedElectronVersion');
